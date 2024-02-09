@@ -208,8 +208,8 @@ class cartController extends Controller
         $now=Carbon::now();
         if($code->starts_at != ""){
             $startDate=Carbon::createFromFormat('Y-m-d',$code->starts_at);
-            if($now->lt($startDate)){
-                return redirect()->back()->with('danger','this coupon is not available');;
+            if($now->lte($startDate)){
+                return redirect()->back()->with('danger','this coupon is not available');
             }
         }
         if($code->expires != ""){

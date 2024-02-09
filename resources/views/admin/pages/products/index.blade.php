@@ -20,20 +20,31 @@
 
         <div class="col-lg-12">
           <div class="card">
+            <form action="{{ route('adminProduct') }}" method="get">
+                <div class="card-header">
+                    <div class="card-tools">
+                        <div class="input-group input-group" style="width: 250px;">
+                          <input type="text" name="search" class="form-control" placeholder="Search Category..." value="{{ request()->query('search') }}">
+                            <div class="input-group-append">
+                              <button type="submit" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                              </button>
+                              <a href="{{ route('adminProduct') }}" class="btn btn-default">
+                                <i class="fas fa-close"></i>
+                              </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="card-body">
               <h5 class="card-title">Product Table</h5>
-              <div class="col-md-3">
-              <input type="search" class="form-control" id="search" placeholder="Search">
-              </div>
-              <div id="ajax_search_result">
+              @if($pageModule['full_access']=="on"||$pageModule['edit_access']=="on")
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <a href="{{ route('createProduct') }}" class="btn btn-primary btn-lg active  " data-mdb-ripple-init role="button" aria-pressed="true">Add Product</a>
+                  </div>
+              @endif
                 <table class="table table-bordered">
-                    @if($pageModule['full_access']=="on"||$pageModule['edit_access']=="on")
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ route('createProduct') }}" class="btn btn-primary btn-lg active  " data-mdb-ripple-init role="button" aria-pressed="true">Add Product</a>
-                        </div>
-                    @endif
-                        <br>
-
                     <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -97,41 +108,6 @@
 
     $(document).ready(function(){
 
-            $(document).on('input','#search',function(){
-                var search=$(this).val();
-                 $.ajax({
-                    url:"{{ route('adminProductSearch') }}",
-                    method:'POST',
-                    datatype:'html',
-                    cache:false,
-                    data:{'_token' : "{{ csrf_token() }}",
-                            search:search},
-                    success:function(data){
-                        $('#ajax_search_result').html(data);
-                    },
-                    error:function(){
-                        alert('Error');
-                    }
-                })
-            });
-            $(document).on('click','#ajax_search_pagination a',function(e){
-                e.preventDefault();
-                var search=$(this).val();
-                $.ajax({
-                    url:$(this).attr("href"),
-                    method:'POST',
-                    datatype:'html',
-                    cache:false,
-                    data:{'_token' : "{{ csrf_token() }}",
-                            search:search},
-                    success:function(data){
-                        $('#ajax_search_result').html(data);
-                    },
-                    error:function(){
-                    }
-                })
-
-            });
              $(document).on("click",".updateProductStatus",function(){
                     var status = $(this).children().attr("status");
                     var product_id = $(this).attr("product_id");

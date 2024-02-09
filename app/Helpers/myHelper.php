@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Mail;
             return $PercentRate;
         }
         function getCountRating($id){
-            $countRates=ProductRate::where('product_id',$id)->count();
+            $countRates=ProductRate::where('status',1)->where('product_id',$id)->count();
             return $countRates;
         }
         function getCountWishlist(){

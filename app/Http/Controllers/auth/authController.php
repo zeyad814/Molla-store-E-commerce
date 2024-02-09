@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\auth;
 
 use App\Models\User;
+use App\Models\Order;
+use App\Models\DiscountCoupon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,6 +13,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\registerRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\restPassword;
+use App\Mail\coupon;
+use Session;
 
 class authController extends Controller
 {
@@ -44,9 +48,9 @@ class authController extends Controller
                 setcookie('frontPassword',"");
             }
             //redirect previous page
-            if(session()->has('url.intended')){
-                return redirect(session()->get('url.intended'));
-            }
+            // if(session()->has('url.intended')){
+            //     return redirect(session()->get('url.intended'));
+            // }
 
 
          return redirect()->route('home');
@@ -109,4 +113,29 @@ class authController extends Controller
           ->delete();
           return redirect()->route('login')->with('success','password is reset successfully');
     }
+    public function index(){
+        Session::put('page','crm');
+            $users = Order::groupBy('user_id')
+                    ->select('user_id', \DB::raw('sum(total) as total'), \DB::raw('count(*) as order_count'))
+                    ->orderBy('total', 'desc')
+                    ->paginate(10);
+        return view('admin.pages.CRM.index',compact('users'));
+    }
+    public function send(request $request,$id){
+        $user=User::find($id);
+        $data = $request->all();
+        $coupon = DiscountCoupon::where('code',$data['coupon_code'])->get()->first();
+        if(empty($coupon)){
+            return redirect()->back()->with('error','this code DOES NOT exist!');
+        }
+        $formData = [
+            'user' => $user,
+            'subject'=>'Congratulation you have Promotion Code',
+            'coupon_code'=>$data['coupon_code'],
+            'coupon_data'=> $coupon
+        ];
+        Mail::to($user->email)->send(new coupon($formData));
+        return redirect()->back()->with('success','Successfully Send Coupon to User');
+    }
+
 }

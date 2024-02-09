@@ -179,7 +179,7 @@
                         </aside><!-- End .col-lg-3 -->
                     </div><!-- End .row -->
                 </form>
-                    <div class="col-lg-9 cart-discount">
+                    <div class="col-lg-12 cart-discount">
                         <form action="{{ route('submit.coupon') }}" method="post">@csrf
                             <div class="input-group">
                                 <input type="text" class="form-control" name="code"  placeholder="coupon code">

@@ -43,6 +43,7 @@ use App\Http\Controllers\admin\adminCategoryController;
     route::get('/AdminLogin',[adminAuthController::class,'login'])->name('adminLogin');
     route::post('/submitAdminLogin',[adminAuthController::class,'submitLogin'])->name('submitAdminLogin');
     Route::get('page/{page}',[adminCmsController::class,'show'])->name('cms.show');
+    Route::post('/add-to-wishlist',[wishlistController::class,'addToWishlist'])->name('add.wishlist');
     Route::controller(frontProductController::class)->prefix('product')->group(function (){
         Route::get('/{category_name?}','index')->name('front.products');
         Route::get('/show/{id}','show')->name('front.product.show');
@@ -57,7 +58,6 @@ use App\Http\Controllers\admin\adminCategoryController;
 
 
     Route::middleware('auth:web')->group(function(){
-        Route::post('/add-to-wishlist',[wishlistController::class,'addToWishlist'])->name('add.wishlist');
         Route::get('/wishlist/index',[wishlistController::class,'index'])->name('index.wishlist');
         Route::get('/wishlist/delete/{id}',[wishlistController::class,'destroy'])->name('wishlist.delete');
         Route::controller(cartController::class)->prefix('cart')->group(function (){
@@ -119,8 +119,6 @@ use App\Http\Controllers\admin\adminCategoryController;
         Route::get('/delete-brand-logo/{id}',[adminBrandController::class , 'destroyImage'])->name('deleteBrandImage');
         Route::get('/delete-brand-image/{id}',[adminBrandController::class , 'destroyLogo'])->name('deleteBrandLogo');
         Route::get('/admin-product',[adminProductController::class,"index"])->name('adminProduct');
-        Route::get('/admin-product-pagination',[adminProductController::class,"pagination"])->name('adminProductPagination');
-        Route::post('/admin-product-search',[adminProductController::class,"search"])->name('adminProductSearch');
         Route::get('/create-product',[adminProductController::class,"create"])->name('createProduct');
         Route::post('/submit-create-product',[adminProductController::class,"submitCreate"])->name('submitCreateProduct');
         Route::post('/update-product-status',[adminProductController::class,"updateStatus"])->name('updateProductStatus');
@@ -138,6 +136,8 @@ use App\Http\Controllers\admin\adminCategoryController;
         Route::get('/edit-banner/{id}',[adminBannerController::class,"edit"])->name('editBanner');
         Route::post('/update-banner/{id}',[adminBannerController::class,"update"])->name('updateBanner');
         Route::get('/delete-banner/{id}',[adminBannerController::class,"destroy"])->name('deleteBanner');
+        Route::get('/crm/index',[authController::class,"index"])->name('cms.index');
+        Route::post('send-coupon/{id}',[authController::class,"send"])->name('cms.send.coupon');
         Route::controller(adminCouponController::class)->prefix('coupon')->group(function (){
             Route::get('/index','index')->name('coupon.index');
             Route::get('/create','create')->name('coupon.create');

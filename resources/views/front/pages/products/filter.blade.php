@@ -329,10 +329,10 @@
                             Price Range:
                         </div><!-- End .filter-price-text -->
                         <input type="text" class="js-range-slider" name="my_range" value="" />
-
                     </div><!-- End .filter-price -->
                 </div><!-- End .widget-body -->
             </div><!-- End .collapse -->
+            <a href="{{ route('front.products') }}" class="btn btn-outline-dark-2"><span>RESET</span><i class="icon-refresh"></i></a>
         </div><!-- End .widget -->
 
     </div><!-- End .sidebar sidebar-shop -->

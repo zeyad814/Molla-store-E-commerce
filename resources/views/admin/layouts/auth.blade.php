@@ -139,7 +139,7 @@
         @php $active = "collapsed"  @endphp
         @endif
           <a class="nav-link {{ $active }} " href="{{ route('adminProduct') }}">
-              <i class="bi bi-grid"></i>
+              <i class="bi bi-tag-fill"></i>
               <span>Products</span>
             </a>
         </li><!-- End Dashboard Nav -->
@@ -165,6 +165,19 @@
               <span>Orders</span>
             </a>
         </li><!-- End Dashboard Nav -->
+        @if(Auth::guard('admin')->user()->type== 2)
+            <li class="nav-item">
+            @if(Session::get('page')=="crm")
+            @php $active = ""  @endphp
+            @else
+            @php $active = "collapsed"  @endphp
+            @endif
+            <a class="nav-link {{ $active }} " href="{{ route('cms.index') }}">
+                <i class="bi bi-clipboard-data"></i>
+                <span>CRM</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+        @endif
       <li class="nav-item">
         @if(Session::get('page')=="banner")
         @php $active = ""  @endphp
@@ -193,12 +206,14 @@
         @else
         @php $active = "collapsed"  @endphp
         @endif
-        <li class="nav-item">
-            <a class="nav-link {{ $active }} " href="{{ route('coupon.index') }}">
-                <i class="bi bi-percent"></i>
-                <span>Coupons</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
+        @if(Auth::guard('admin')->user()->type== 2)
+            <li class="nav-item">
+                <a class="nav-link {{ $active }} " href="{{ route('coupon.index') }}">
+                    <i class="bi bi-percent"></i>
+                    <span>Coupons</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+        @endif
         @if(Session::get('page')=="subAdmin")
         @php $active = ""  @endphp
         @else

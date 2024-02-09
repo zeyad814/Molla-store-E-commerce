@@ -83,9 +83,53 @@
 
                 </div>
               </div>
-
             </div><!-- End Customers Card -->
-            <!-- Sales Card -->
+            @if(Auth::guard('admin')->user()->type== 1)
+                <div class="col-xxl-4 col-xl-12">
+
+                <div class="card info-card customers-card">
+
+
+                    <div class="card-body">
+                    <h5 class="card-title">Brands</h5>
+
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-patch-check-fill"></i>
+                        </div>
+                        <div class="ps-3">
+                        <h6>{{ $brands }}</h6>
+
+
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+                </div><!-- End Customers Card -->
+                <div class="col-xxl-4 col-xl-12">
+
+                <div class="card info-card customers-card">
+
+
+                    <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-grid"></i>
+                        </div>
+                        <div class="ps-3">
+                        <h6>{{ $categories }}</h6>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+                </div><!-- End Customers Card -->
+            @endif
+            @if(Auth::guard('admin')->user()->type== 2)
+            <!-- Revenue Card -->
             <div class="col-xxl-4 col-md-6">
                 <div class="card info-card revenue-card">
 
@@ -148,98 +192,14 @@
                 </div>
               </div><!-- End Revenue Card -->
 
-            <div class="col-12">
-              <div class="card recent-sales overflow-auto">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                  <table class="table table-borderless datatable">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td>Brandon Jacob</td>
-                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                        <td>$64</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2147</a></th>
-                        <td>Bridie Kessler</td>
-                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                        <td>$47</td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2049</a></th>
-                        <td>Ashleigh Langosh</td>
-                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                        <td>$147</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Angus Grady</td>
-                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                        <td>$67</td>
-                        <td><span class="badge bg-danger">Rejected</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Raheem Lehner</td>
-                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                        <td>$165</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div><!-- End Recent Sales -->
-
             <!-- Top Selling -->
+            @endif
+
+            @if(Auth::guard('admin')->user()->type== 2)
             <div class="col-12">
               <div class="card top-selling overflow-auto">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
                 <div class="card-body pb-0">
-                  <h5 class="card-title">Top Selling <span>| Today</span></h5>
+                  <h5 class="card-title">Top Selling </h5>
 
                   <table class="table table-borderless">
                     <thead>
@@ -252,41 +212,15 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="{{ asset('admin/assets') }}/img/product-1.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
-                        <td>$64</td>
-                        <td class="fw-bold">124</td>
-                        <td>$5,828</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="{{ asset('admin/assets') }}/img/product-2.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Exercitationem similique doloremque</a></td>
-                        <td>$46</td>
-                        <td class="fw-bold">98</td>
-                        <td>$4,508</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="{{ asset('admin/assets') }}/img/product-3.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Doloribus nisi exercitationem</a></td>
-                        <td>$59</td>
-                        <td class="fw-bold">74</td>
-                        <td>$4,366</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="{{ asset('admin/assets') }}/img/product-4.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum error</a></td>
-                        <td>$32</td>
-                        <td class="fw-bold">63</td>
-                        <td>$2,016</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="{{ asset('admin/assets') }}/img/product-5.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a></td>
-                        <td>$79</td>
-                        <td class="fw-bold">41</td>
-                        <td>$3,239</td>
-                      </tr>
+                        @foreach ($topSelling as $best)
+                        <tr>
+                          <th scope="row"><a href="#"><img src="{{ asset('admin/assets/img/products') }}/{{ $best->product->main_image }}" alt=""></a></th>
+                          <td><a href="{{ route('adminProduct',['search'=>$best->product->product_name]) }}" class="text-primary fw-bold">{{ $best->product->product_name }}</a></td>
+                          <td>${{ $best->product->final_price }}</td>
+                          <td class="fw-bold">{{ $best->product_qty }}</td>
+                          <td>${{ $best->total }}</td>
+                        </tr>
+                        @endforeach
                     </tbody>
                   </table>
 
@@ -294,83 +228,79 @@
 
               </div>
             </div><!-- End Top Selling -->
-
+            @endif
           </div>
         </div><!-- End Left side columns -->
 
         <!-- Right side columns -->
         <div class="col-lg-4">
+            <!-- Website Traffic -->
+            @if(Auth::guard('admin')->user()->type== 2)
+            <div class="card">
 
+                <div class="card-body pb-0">
+                <h5 class="card-title">Website Revenue Traffic </h5>
 
+                <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
-          <!-- Website Traffic -->
-          <div class="card">
-
-            <div class="card-body pb-0">
-              <h5 class="card-title">Website Revenue Traffic </h5>
-
-              <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#trafficChart")).setOption({
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    legend: {
-                      top: '5%',
-                      left: 'center'
-                    },
-                    series: [{
-                      name: 'Access From',
-                      type: 'pie',
-                      radius: ['40%', '70%'],
-                      avoidLabelOverlap: false,
-                      label: {
-                        show: false,
-                        position: 'center'
-                      },
-                      emphasis: {
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                    echarts.init(document.querySelector("#trafficChart")).setOption({
+                        tooltip: {
+                        trigger: 'item'
+                        },
+                        legend: {
+                        top: '5%',
+                        left: 'center'
+                        },
+                        series: [{
+                        name: 'Access From',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
                         label: {
-                          show: true,
-                          fontSize: '18',
-                          fontWeight: 'bold'
-                        }
-                      },
-                      labelLine: {
-                        show: false
-                      },
-                      data: [{
-                          value: {{ $totalRevenue }},
-                          name: 'Total'
+                            show: false,
+                            position: 'center'
                         },
-                        {
-                          value: 735,
-                          name: 'Direct'
+                        emphasis: {
+                            label: {
+                            show: true,
+                            fontSize: '18',
+                            fontWeight: 'bold'
+                            }
                         },
-                        {
-                          value: {{ $lastMonth }},
-                          name: 'last Month'
+                        labelLine: {
+                            show: false
                         },
-                        {
-                          value: {{ $thisMonth }},
-                          name: 'This Month'
-                        },
-                        {
-                          value: 300,
-                          name: 'Last year'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
+                        data: [{
+                            value: {{ $totalRevenue }},
+                            name: 'Total'
+                            },
+                            {
+                            value: 735,
+                            name: 'Direct'
+                            },
+                            {
+                            value: {{ $lastMonth }},
+                            name: 'last Month'
+                            },
+                            {
+                            value: {{ $thisMonth }},
+                            name: 'This Month'
+                            },
+                            {
+                            value: 300,
+                            name: 'Last year'
+                            }
+                        ]
+                        }]
+                    });
+                    });
+                </script>
 
-            </div>
-          </div><!-- End Website Traffic -->
-
-
-
+                </div>
+            </div><!-- End Website Traffic -->
+            @endif
         </div><!-- End Right side columns -->
 
       </div>

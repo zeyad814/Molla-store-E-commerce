@@ -3,7 +3,6 @@
                             <div class="row">
                                 <div class="col-6 col-lg-3">
                                     <figure class="product-media">
-                                        <span class="product-label label-new">New</span>
                                         @if($product->stock==0)
                                         <span class="product-label label-out">Out of Stock</span>
                                         @endif

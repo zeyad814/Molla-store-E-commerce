@@ -253,9 +253,9 @@
                         </div><!-- End .product-desc-content -->
                     </div><!-- .End .tab-pane -->
                     <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+                        <h5>Reviews ({{ getCountRating($product->id) }})</h5>
                         @foreach ($productReview as $review)
                         <div class="reviews">
-                            <h3>Reviews ({{ getCountRating($product->id) }})</h3>
                             <div class="review">
                                 <div class="row no-gutters">
                                     <div class="col-auto">

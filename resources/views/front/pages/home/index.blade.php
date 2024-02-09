@@ -30,7 +30,7 @@
                                 </span>
                             </div><!-- End .intro-price -->
 
-                            <a href="category.html" class="btn btn-primary btn-round">
+                            <a href="{{ route('front.products') }}" class="btn btn-primary btn-round">
                                 <span>Shop More</span>
                                 <i class="icon-long-arrow-right"></i>
                             </a>
@@ -1812,9 +1812,9 @@
                                         </div><!-- End .product-action -->
 
                                         <div class="product-action">
-                                            <form action="{{ route('cartStore',$newProduct->id) }}">
+                                            <form action="{{ route('cartStore',$newProduct->id) }}" method="post" >@csrf
                                                 <input type="hidden" name="product_qty" value="1" >
-                                                <a href="javescript:void(0);" onclick="this.closest('form').submit();" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                                <a href="javascript:void(0);" onclick="this.closest('form').submit();" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
                                             </form>
                                             {{-- <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a> --}}
                                         </div><!-- End .product-action -->
@@ -1838,9 +1838,19 @@
                                         @endif
                                         <div class="ratings-container">
                                             <div class="ratings">
-                                                <div class="ratings-val" style="width: 50%;"></div><!-- End .ratings-val -->
+                                                <div class="ratings-val" style="width: {{ getPercentRating($newProduct->id) }}%;"></div><!-- End .ratings-val -->
                                             </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 4 Reviews )</span>
+                                            <span class="ratings-text">( {{ getCountRating( $newProduct->id ) }} Reviews )</span>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
                                         </div><!-- End .rating-container -->
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product -->
@@ -2053,9 +2063,19 @@
                                         </div><!-- End .product-price -->
                                         <div class="ratings-container">
                                             <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                                <div class="ratings-val" style="width: {{ getPercentRating($discount->id) }}%;"></div><!-- End .ratings-val -->
                                             </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 10 Reviews )</span>
+                                            <span class="ratings-text">( {{ getCountRating($discount->id) }} Reviews )</span>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
                                         </div><!-- End .rating-container -->
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product -->
@@ -2125,188 +2145,53 @@
                                         }
                                     }
                                 }'>
+                                @foreach ($bestSelling as $best)
                                 <div class="product product-2">
                                     <figure class="product-media">
-                                        <span class="product-label label-circle label-new">New</span>
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-3.jpg" alt="Product image" class="product-image">
+                                        <a href="{{ route('front.product.show',$best->id) }}">
+                                            <img src="{{ asset('admin/assets/img/products') }}/{{ $best->main_image }}" alt="Product image" class="product-image">
                                         </a>
 
                                         <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            <a href="#" onclick="addToWishlist({{ $best->id }})" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
                                         </div><!-- End .product-action -->
 
                                         <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            <form action="{{ route('cartStore',$best->id) }}"></form>
+                                            <input type="hidden" name="product_qty" value="1">
+                                            <a href="javascript:void(0);" onclick="this.closest('form').submit();"  class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                            </form>
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 
                                     <div class="product-body">
                                         <div class="product-cat">
-                                            <a href="#">Tablets</a>
+                                            <a href="#">{{ $best->category->category_name }}</a>
                                         </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Apple - 11 Inch iPad Pro  with Wi-Fi 256GB </a></h3><!-- End .product-title -->
+                                        <h3 class="product-title"><a href="product.html">{{ $best->product_name }}</a></h3><!-- End .product-title -->
                                         <div class="product-price">
-                                            $899.99
+                                            ${{ $best->final_price }}
                                         </div><!-- End .product-price -->
                                         <div class="ratings-container">
                                             <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                                <div class="ratings-val" style="width: {{ getPercentRating($best->id) }}%;"></div><!-- End .ratings-val -->
                                             </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 4 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-
-                                        <div class="product-nav product-nav-dots">
-                                            <a href="#" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        </div><!-- End .product-nav -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-2.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">Audio</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Bose - SoundLink Bluetooth Speaker</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $79.99
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 6 Reviews )</span>
+                                            <span class="ratings-text">( {{ getCountRating($best->id) }} Reviews )</span>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
                                         </div><!-- End .rating-container -->
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product -->
+                                @endforeach
 
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <span class="product-label label-circle label-top">Top</span>
-                                        <span class="product-label label-circle label-sale">Sale</span>
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-4.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">Cell Phone</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Google - Pixel 3 XL  128GB</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            <span class="new-price">$35.41</span>
-                                            <span class="old-price">Was $41.67</span>
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 10 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-
-                                        <div class="product-nav product-nav-dots">
-                                            <a href="#" class="active" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        </div><!-- End .product-nav -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <span class="product-label label-circle label-top">Top</span>
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-5.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">TV & Home Theater</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Samsung - 55" Class  LED 2160p Smart</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $899.99
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 5 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <span class="product-label label-circle label-top">Top</span>
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-1.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">Laptops</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">MacBook Pro 13" Display, i5</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $1,199.99
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 4 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
                             </div><!-- End .owl-carousel -->
                         </div><!-- .End .tab-pane -->
                         <div class="tab-pane p-0 fade" id="trending-sale-tab" role="tabpanel" aria-labelledby="trending-sale-link">
@@ -2331,158 +2216,45 @@
                                         }
                                     }
                                 }'>
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <span class="product-label label-circle label-new">New</span>
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-8.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">Smartwatches</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Apple Watch Series 4 Gold Aluminum Case</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $499.99
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 4 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-
-                                        <div class="product-nav product-nav-dots">
-                                            <a href="#" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        </div><!-- End .product-nav -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-
+                                @foreach ($topRating as $topRate)
                                 <div class="product product-2">
                                     <figure class="product-media">
                                         <span class="product-label label-circle label-top">Top</span>
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-6.jpg" alt="Product image" class="product-image">
+                                        <a href="{{ route('front.product.show',$best->id) }}">
+                                            <img src="{{ asset('admin/assets/img/products') }}/{{ $topRate->product->main_image }}" alt="Product image" class="product-image">
                                         </a>
 
                                         <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            <a href="#" onclick="addToWishlist({{$topRate->product_id}});" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
                                         </div><!-- End .product-action -->
 
                                         <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            <form action="{{ route('cartStore',$topRate->product_id) }}" method="post">@csrf
+                                                <input type="hidden" name="product_qty" value="1" >
+                                            <a href="javascript:void(0);" onclick="this.closest('form').submit();" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                            </form>
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 
                                     <div class="product-body">
                                         <div class="product-cat">
-                                            <a href="#">Headphones</a>
+                                            <a href="#">{{ $topRate->product->category->category_name }}</a>
                                         </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Bose - SoundSport  wireless headphones</a></h3><!-- End .product-title -->
+                                        <h3 class="product-title"><a href="product.html">{{ $topRate->product->product_name }}</a></h3><!-- End .product-title -->
                                         <div class="product-price">
-                                            $199.99
+                                            ${{ $topRate->product->final_price }}
                                         </div><!-- End .product-price -->
                                         <div class="ratings-container">
                                             <div class="ratings">
-                                                <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                                                <div class="ratings-val" style="width: {{ getPercentRating($topRate->product_id) }}%;"></div><!-- End .ratings-val -->
                                             </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 4 Reviews )</span>
-                                        </div><!-- End .rating-container -->
+                                            <span class="ratings-text">( {{ getCountRating( $topRate->product_id) }} Reviews )</span>
 
-                                        <div class="product-nav product-nav-dots">
-                                            <a href="#" style="background: #69b4ff;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" style="background: #ff887f;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        </div><!-- End .product-nav -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-7.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">Video Games</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Microsoft - Refurbish Xbox One S 500GB</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $279.99
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 6 Reviews )</span>
                                         </div><!-- End .rating-container -->
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product -->
+                                @endforeach
 
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <span class="product-label label-circle label-new">New</span>
-                                        <a href="product.html">
-                                            <img src="{{ asset('front/assets') }}/images/demos/demo-4/products/product-3.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">Tablets</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Apple - 11 Inch iPad Pro  with Wi-Fi 256GB </a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            $899.99
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 4 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-
-                                        <div class="product-nav product-nav-dots">
-                                            <a href="#" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>
-                                            <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        </div><!-- End .product-nav -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
                             </div><!-- End .owl-carousel -->
                         </div><!-- .End .tab-pane -->
                     </div><!-- End .tab-content -->
@@ -2545,9 +2317,9 @@
                             </div><!-- End .product-price -->
                             <div class="ratings-container">
                                 <div class="ratings">
-                                    <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
+                                    <div class="ratings-val" style="width: {{ getPercentRating($recommendation->product->id) }}%;"></div><!-- End .ratings-val -->
                                 </div><!-- End .ratings -->
-                                <span class="ratings-text">( 4 Reviews )</span>
+                                <span class="ratings-text">( {{ getCountRating($recommendation->product->id) }} Reviews )</span>
                             </div><!-- End .rating-container -->
                         </div><!-- End .product-body -->
                     </div><!-- End .product -->

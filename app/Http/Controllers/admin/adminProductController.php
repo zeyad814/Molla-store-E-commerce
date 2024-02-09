@@ -19,9 +19,12 @@ use Auth;
 class adminProductController extends Controller
 {
     use GeneralTraits;
-    public function index(){
+    public function index(request $request){
         Session::put('page','product');
         $products=Product::paginate(5);
+        if(!empty($request->get('search'))){
+            $products = Product::where('product_name', 'like','%'.$request->get('search').'%')->paginate(5)->appends($request->get('search'));
+        }
         $cmsPagesModuleCount=AdminRole::where(['subadmin_id'=>Auth::guard('admin')->user()->id,'module'=>'products'])->count();
         $pageModule=array();
         if(Auth::guard('admin')->user()->type=="2"){
@@ -36,15 +39,15 @@ class adminProductController extends Controller
         }
         return view('admin.pages.products.index',compact('products','pageModule'));
     }
-    public function search(Request $request){
-        if($request->ajax()){
-            $products = Product::where("product_name","like","%{$request->search}%")
-            ->orWhere("final_price","like","%{$request->search}%")
-            ->orderBy('id','asc')
-            ->paginate(3);
-            return view('admin.pages.products.pagination',compact('products'));
-        }
-    }
+    // public function search(Request $request){
+    //     if($request->ajax()){
+    //         $products = Product::where("product_name","like","%{$request->search}%")
+    //         ->orWhere("final_price","like","%{$request->search}%")
+    //         ->orderBy('id','asc')
+    //         ->paginate(3);
+    //         return view('admin.pages.products.pagination',compact('products'));
+    //     }
+    // }
     public function create(){
         Session::put('page','product');
         $categories = Category::select("category_name","id")->get();
