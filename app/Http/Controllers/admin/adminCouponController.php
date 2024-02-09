@@ -22,7 +22,7 @@ class adminCouponController extends Controller
             $categories=DiscountCoupon::where('name','like',"%".$request->get('search')."%")->paginate(10);
         }
 
-
+        // roles
         $cmsPagesModuleCount=AdminRole::where(['subadmin_id'=>Auth::guard('admin')->user()->id,'module'=>'brands'])->count();
         $pageModule=array();
         if(Auth::guard('admin')->user()->type=="2"){
@@ -35,6 +35,7 @@ class adminCouponController extends Controller
         }else{
             $pageModule = AdminRole::where(['subadmin_id'=>Auth::guard('admin')->user()->id,'module'=>'coupons'])->first()->toArray();
         }
+        //----------------------------------------------------------------
         return view('admin.pages.coupons.index',compact('coupons','pageModule'));
     }
 

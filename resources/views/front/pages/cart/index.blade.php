@@ -62,9 +62,9 @@
                                             <span class="out-of-stock">Out of stock</span>
                                             @else
                                             @php $plus="plus"; $minus="minus"; @endphp
-                                            <a href="{{ route('cart.update.quantity',$content->id."plus") }}" ><i class="bi bi-file-plus"></i></a>
+                                            <a href="{{ route('increment.cart.quantity',$content->id) }}" ><i class="bi bi-file-plus"></i></a>
                                             {{ $content->product_qty }}
-                                            <a href="{{ route('cart.update.quantity',$content->id."minus") }}"><i class="bi bi-file-minus"></i></a>
+                                            <a href="{{ route('decrement.cart.quantity',$content->id) }}"><i class="bi bi-file-minus"></i></a>
                                             @endif
                                             {{-- </div><!-- End .cart-product-quantity --> --}}
                                     </td>

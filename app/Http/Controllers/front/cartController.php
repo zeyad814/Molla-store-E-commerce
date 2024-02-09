@@ -224,16 +224,17 @@ class cartController extends Controller
         Session::put('code',$code);
         return redirect()->back()->with('success','the Coupon was successfully applied!');
     }
-    public function updateQuantity($id){
-        $product_id = $id[0];
-        if($id== $product_id."plus"){
-        Cart::where('id',$product_id)->increment('product_qty');
+    public function incrementQuantity($id){
+        Cart::where('id', $id)->increment('product_qty');
+        if(Cart::where('id',$id)->value('product_qty')==0){
+            Cart::where('id', $id)->delete();
         }
-        if($id== $product_id."minus"){
-        Cart::where('id',$product_id)->decrement('product_qty');
-        }
-        if(Cart::where('id', $product_id)->value('product_qty')== 0){
-            Cart::where('id', $product_id)->delete();
+        return back()->with('success','the cart was successfully updated!');
+    }
+    public function decrementQuantity($id){
+        Cart::where('id', $id)->decrement('product_qty');
+        if(Cart::where('id',$id)->value('product_qty')==0){
+            Cart::where('id', $id)->delete();
         }
         return back()->with('success','the cart was successfully updated!');
     }
